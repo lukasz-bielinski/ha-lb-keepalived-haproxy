@@ -7,8 +7,10 @@ services:
      - "8080:8080"
      - "443:443"
      - "60001:60001"
+     - "1936:1936"
     volumes:
      - /root/haproxy.cfg:/etc/haproxy/haproxy.cfg
+     - /root/clientcert.pem:/certs/clientcert.pem
     image: million12/haproxy
 
   keepalived:
