@@ -1,0 +1,31 @@
+version: '2'
+services:
+  haproxy:
+    container_name: haproxy
+    restart: always
+    ports:
+     - "8080:8080"
+     - "443:443"
+     - "60001:60001"
+    volumes:
+     - /root/haproxy.cfg:/etc/haproxy/haproxy.cfg
+    image: million12/haproxy
+
+  keepalived:
+    container_name: keepalived
+    restart: always
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    environment:
+      VIP: 192.168.1.140
+      MASK: 32
+      VROUTERID: 2
+      STATE: BACKUP
+      INTERFACE: eth0
+      PRIORITY: 100
+      ADVERT: 1
+      AUTHPASS: test12
+    image: lukaszbielinski/docker-keepalived:1.2.23
+    volumes:
+     - /root/.ssh/authorized_keys:/hostkeys/authorized_keys
