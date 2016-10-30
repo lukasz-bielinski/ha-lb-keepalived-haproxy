@@ -5,3 +5,6 @@
 2. if dont't container runs docker-compose with haproxy image
 
 All checks are http checks
+
+
+docs: https://www.linangran.com/?p=547
