@@ -5,6 +5,6 @@
 2. if dont't container runs docker-compose with haproxy image
 
 All checks should be http checks
-check for https api backend is l4, because i don't wont terminate ssl on lb
+Check for https api backend is l4, because i don't wont terminate ssl on lb
 
 docs: https://www.linangran.com/?p=547
