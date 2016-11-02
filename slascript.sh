@@ -3,6 +3,9 @@
 ##czas z ktorego zbieramy sla. w sekundach
 periodOftime=20
 nokOccurence=0
+okOccurence=0
+nosla=0
+sla=0
 
 echo "creating array for sla check"
 declare -a slaCheck=()
