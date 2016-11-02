@@ -2,6 +2,7 @@
 
 ##czas z ktorego zbieramy sla. w sekundach
 periodOftime=20
+apiEndpoint=192.168.1.140:8080
 nokOccurence=0
 okOccurence=0
 nosla=0
@@ -20,7 +21,7 @@ while [ 1 ]
     do
       # echo $counter
       ((counter++))
-      apiStatus=$(curl -s 192.168.1.140:8080/healthz --connect-timeout 1 --max-time 1)
+      apiStatus=$(curl -s $apiEndpoint/healthz --connect-timeout 1 --max-time 1)
       sleep 1
 
       if [ "$apiStatus" = "ok" ]
