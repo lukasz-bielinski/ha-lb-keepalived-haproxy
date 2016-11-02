@@ -8,6 +8,8 @@ nosla=0
 sla=0
 
 echo "creating array for sla check"
+echo ""
+echo "measure SLA for $periodOftime seconds"
 declare -a slaCheck=()
 
 while [ 1 ]
@@ -31,6 +33,7 @@ while [ 1 ]
       fi
 
     # echo  ${slaCheck[counter]}
+
     echo ""
     nokOccurence=$(for i in ${slaCheck[*]}; do
                      echo $i
@@ -48,14 +51,9 @@ while [ 1 ]
 
               printf  "%.3f\n", ('"$sla"')}')
 
-    echo "SLA is $slaString %"
+    echo "$(date --iso-8601=seconds) SLA for $periodOftime seconds is $slaString %"
     echo ""
 
     done
-
-
-
-
-
 
   done
