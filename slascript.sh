@@ -2,11 +2,14 @@
 
 ##czas z ktorego zbieramy sla. w sekundach
 periodOftime=20
-apiEndpoint=192.168.1.140:8080
+apiEndpoint=https://192.168.1.140
 nokOccurence=0
 okOccurence=0
 nosla=0
 sla=0
+clientCert="/home/pulse/workspace01/certs/cluster1/administrator-cert/cluster-admin.pem"
+clientKey="/home/pulse/workspace01/certs/cluster1/administrator-cert/cluster-admin-key.pem"
+caCert="/home/pulse/workspace01/certs/cluster1/ca/ca.pem"
 
 echo "creating array for sla check"
 echo ""
@@ -21,7 +24,7 @@ while [ 1 ]
     do
       # echo $counter
       ((counter++))
-      apiStatus=$(curl -s $apiEndpoint/healthz --connect-timeout 1 --max-time 1)
+      apiStatus=$(curl -s $apiEndpoint/healthz --cert $clientCert --key $clientKey --cacert $caCert --connect-timeout 1 --max-time 1)
       sleep 1
 
       if [ "$apiStatus" = "ok" ]
