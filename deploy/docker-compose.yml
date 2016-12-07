@@ -1,21 +1,13 @@
 version: '2'
 services:
-  haproxy:
-    container_name: haproxy
+  keepalived:
+    container_name: docker-lb
     restart: always
     ports:
-     - "8080:8080"
-     - "443:443"
-     - "60001:60001"
-     - "1936:1936"
-    volumes:
-     - /root/haproxy.cfg:/etc/haproxy/haproxy.cfg
-     - /root/clientcert.pem:/certs/clientcert.pem
-    image: million12/haproxy
-
-  keepalived:
-    container_name: keepalived
-    restart: always
+      - "8080:8080"
+      - "443:443"
+      - "60001:60001"
+      - "1936:1936"
     network_mode: host
     cap_add:
       - NET_ADMIN
@@ -28,6 +20,6 @@ services:
       PRIORITY: 100
       ADVERT: 1
       AUTHPASS: test12
-    image: lukaszbielinski/docker-keepalived:1.2.23
+    image: lukaszbielinski/docker-lb:1.0
     volumes:
-     - /root/.ssh/authorized_keys:/hostkeys/authorized_keys
+     - /root/haproxy.cfg:/haproxy.cfg
