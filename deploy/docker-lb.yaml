@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: docker-lb
+  namespace: kube-system
+spec:
+  hostNetwork: true
+  containers:
+  - name: docker-lb
+    image: lukaszbielinski/docker-lb:1.01
+    securityContext:
+      capabilities:
+        add:
+          - NET_ADMIN
+
+    env:
+    - name: VIP
+      value: '192.168.1.140'
+    - name: MASK
+      value: '32'
+    - name: VROUTERID
+      value: '2'
+    - name: STATE
+      value: BACKUP
+    - name: INTERFACE
+      value: eth0
+    - name: PRIORITY
+      value: '100'
+    - name: ADVERT
+      value: '1'
+    - name: AUTHPASS
+      value: test12
+
+    livenessProbe:
+      httpGet:
+        host: 127.0.0.1
+        port: 60001
+        path: /
+      initialDelaySeconds: 15
+      timeoutSeconds: 15
+    ports:
+    - containerPort: 1443
+      hostPort: 1443
+      name: https
+    - containerPort: 18080
+      hostPort: 18080
+      name: local
+    - containerPort: 60001
+      hostPort: 60001
+      name: haproxy-health
+    - containerPort: 1936
+      hostPort: 1936
+      name: haproxy-stats
+    volumeMounts:
+    - mountPath: /docker-lb
+      name: docker-lb
+      readOnly: true
+
+  volumes:
+  - hostPath:
+      path: /etc/kubernetes/docker-lb
+    name: docker-lb
